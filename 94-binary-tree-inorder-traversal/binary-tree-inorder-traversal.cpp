@@ -1,0 +1,21 @@
+
+class Solution {
+public:
+    vector<int>ans;
+void inorder(TreeNode* root){
+    if(root==NULL){
+        return ;
+    }else{ 
+        inorder(root->left);
+        ans.push_back(root->val);
+        inorder(root->right);
+        }
+    }
+
+    vector<int> inorderTraversal(TreeNode* root) {
+        inorder(root);
+        return ans;
+
+        
+    }
+};
