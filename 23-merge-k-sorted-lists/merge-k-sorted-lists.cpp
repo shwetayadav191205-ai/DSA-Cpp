@@ -1,32 +1,33 @@
-
 class Solution {
 public:
-    ListNode* mergeTwo(ListNode* a, ListNode* b) {
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        priority_queue<ListNode*, vector<ListNode*>,
+        decltype([](ListNode* a, ListNode* b) {
+            return a->val > b->val;
+        })> pq;
+
+        for (ListNode* node : lists) {
+            if (node != nullptr) {
+                pq.push(node);
+            }
+        }
+
         ListNode dummy(0);
         ListNode* tail = &dummy;
 
-        while (a && b) {
-            if (a->val <= b->val) {
-                tail->next = a;
-                a = a->next;
-            } else {
-                tail->next = b;
-                b = b->next;
-            }
+        while (!pq.empty()) {
+            ListNode* node = pq.top();
+            pq.pop();
+
+            tail->next = node;
             tail = tail->next;
+
+            if (node->next != nullptr) {
+                pq.push(node->next);
+            }
         }
 
-        tail->next = a ? a : b;
+        tail->next = nullptr;
         return dummy.next;
-    }
-
-    ListNode* mergeKLists(vector<ListNode*>& lists) {
-        ListNode* result = nullptr;
-
-        for (ListNode* list : lists) {
-            result = mergeTwo(result, list);
-        }
-
-        return result;
     }
 };
