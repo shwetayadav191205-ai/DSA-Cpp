@@ -48,7 +48,6 @@ public:
             ans.push_back(q.front());
             q.pop();
         }
-
         return ans;
     }
 };
